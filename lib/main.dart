@@ -10,11 +10,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Task> tasks = [
-      Task(title: "Zrobić zadania", deadline: "2026-03-30"),
-      Task(title: "Nauczyć się do kolokwium", deadline: "2026-03-31"),
-      Task(title: "Posprzątać pokój", deadline: "2026-04-01"),
-      Task(title: "Wysłać projekt", deadline: "2026-04-02"),
+      Task(title: "Przygotować prezentację", deadline: "jutro", done: true, priority: "wysoki"),
+      Task(title: "Oddać raport z laboratoriów", deadline: "dzisiaj", done: true, priority: "wysoki"),
+      Task(title: "Powtórzyć widgety Flutter", deadline: "w piątek", done: false, priority: "średni"),
+      Task(title: "Napisać notatki do kolokwium", deadline: "w weekend", done: false, priority: "niski"),
     ];
+
+    final doneCount = tasks.where((t) => t.done).length;
 
     return MaterialApp(
       title: 'KrakFlow',
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Masz dziś ${tasks.length} zadania",
+                "Ilość zadań: ${tasks.length} (W tym wykonane: $doneCount)",
                 style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 16),
@@ -40,8 +42,10 @@ class MyApp extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return TaskCard(
                       title: tasks[index].title,
-                      subtitle: tasks[index].deadline,
-                      icon: Icons.task,
+                      subtitle: "termin: ${tasks[index].deadline} | priorytet: ${tasks[index].priority}",
+                      icon: tasks[index].done
+                          ? Icons.check_circle
+                          : Icons.radio_button_unchecked,
                     );
                   },
                 ),
@@ -57,8 +61,15 @@ class MyApp extends StatelessWidget {
 class Task {
   final String title;
   final String deadline;
+  final bool done;
+  final String priority;
 
-  Task({required this.title, required this.deadline});
+  Task({
+    required this.title,
+    required this.deadline,
+    required this.done,
+    required this.priority,
+  });
 }
 
 class TaskCard extends StatelessWidget {
