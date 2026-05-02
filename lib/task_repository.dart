@@ -17,13 +17,13 @@ class TaskRepository {
     Task(
       title: "Projekt Flutter",
       deadline: "jutro",
-      done: false,
+      done: true,
       priority: "wysoki",
     ),
     Task(
       title: "Oddać raport",
       deadline: "dzisiaj",
-      done: true,
+      done: false,
       priority: "wysoki",
     ),
     Task(
